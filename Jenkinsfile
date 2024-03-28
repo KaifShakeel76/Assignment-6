@@ -1,13 +1,15 @@
 pipeline {
-    agent any // You can specify an agent here, such as 'docker' or 'label'
+    agent any
 
     stages {
         stage('Load Configuration') {
             steps {
-                Ubuntu {
-                        config = load 'vars/config.groovy'
-                    }
-                    kafkaConfig = [
+                script {
+                    // Load config from vars/config.groovy
+                    def config = load 'vars/config.groovy'
+                    
+                    // Define kafkaConfig
+                    def kafkaConfig = [
                         repositoryURL: 'https://github.com/KaifShakeel76/Assignment-6.git',
                         inventoryPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/inventory',
                         playbookPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/test.yml',
@@ -15,10 +17,12 @@ pipeline {
                         slackTeamDomain: 'bhavneshpvt',
                         slackTokenCredentialId: 'Slack'
                     ]
-
-                    // Call your kafka step with the configuration
-                    kafka(kafkaConfig)
+                    
+                    // Call kafka pipeline function with config and kafkaConfig
+                    kafka(config, kafkaConfig)
                 }
             }
         }
     }
+}
+
