@@ -6,11 +6,11 @@ pipeline {
             steps {
                 script {
                     def config = load 'vars/config.groovy'
-                    SLACK_CHANNEL_NAME = config.SLACK_CHANNEL_NAME
-                    ENVIRONMENT = config.ENVIRONMENT
-                    CODE_BASE_PATH = config.CODE_BASE_PATH
-                    ACTION_MESSAGE = config.ACTION_MESSAGE
-                    KEEP_APPROVAL_STAGE = config.KEEP_APPROVAL_STAGE
+                    SLACK_CHANNEL_NAME = 'jenkinsintegration'
+                    ENVIRONMENT = 'prod'
+                    CODE_BASE_PATH = 'env/prod'
+                    ACTION_MESSAGE = 'Success'
+                    KEEP_APPROVAL_STAGE = true
                 }
             }
         }
