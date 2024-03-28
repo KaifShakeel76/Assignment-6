@@ -1,5 +1,5 @@
 
-SLACK_CHANNEL_NAME = 'build-status'
+SLACK_CHANNEL_NAME = 'jenkinsintegration'
 ENVIRONMENT = 'prod'
 CODE_BASE_PATH = 'env/prod'
 ACTION_MESSAGE = 'Pipeline execution completed'
