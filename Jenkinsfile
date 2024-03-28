@@ -5,7 +5,7 @@ pipeline {
         stage('Clone and Execute') {
             steps {
                 script {
-                    load 'kafka.groovy'
+                    load '/src/kafka/kafka.groovy'
                 }
             }
         }
