@@ -1,23 +1,28 @@
 pipeline {
     agent any
 
+    environment {
+        SLACK_CHANNEL_NAME = 'jenkinsintegration'
+        ENVIRONMENT = 'prod'
+        CODE_BASE_PATH = 'env/prod'
+        ACTION_MESSAGE = 'Success'
+        KEEP_APPROVAL_STAGE = true
+    }
+
     stages {
         stage('Load Configuration') {
             steps {
                 script {
-                    def config = load 'vars/config.groovy'
-                    SLACK_CHANNEL_NAME = 'jenkinsintegration'
-                    ENVIRONMENT = 'prod'
-                    CODE_BASE_PATH = 'env/prod'
-                    ACTION_MESSAGE = 'Success'
-                    KEEP_APPROVAL_STAGE = true
+                    echo 'Config loaded successfully.'
                 }
             }
         }
 
         stage('Clone') {
             steps {
-                sh 'git clone https://github.com/KaifShakeel76/Assignment-6.git'
+                script {
+                    git branch: 'main', url: 'https://github.com/KaifShakeel76/Assignment-6.git'
+                }
             }
         }
 
@@ -33,16 +38,12 @@ pipeline {
         stage('Playbook Execution') {
             steps {
                 script {
-                    def ansibleConfig = [
-                        playbook: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/test.yml',
-                        extraVars: [
-                            SLACK_CHANNEL_NAME: SLACK_CHANNEL_NAME,
-                            ENVIRONMENT: ENVIRONMENT,
-                            CODE_BASE_PATH: CODE_BASE_PATH,
-                            ACTION_MESSAGE: ACTION_MESSAGE
-                        ]
-                    ]
-                    ansiblePlaybook ansibleConfig
+                    ansiblePlaybook become: true, 
+                                   disableHostKeyChecking: true, 
+                                   installation: 'Ansible', 
+                                   inventory: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/inventory.ini', 
+                                   playbook: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/test.yml', 
+                                   vaultTmpPath: ''
                 }
             }
         }
@@ -52,7 +53,7 @@ pipeline {
                 script {
                     def kafkaConfig = [
                         repositoryURL: 'https://github.com/KaifShakeel76/Assignment-6.git',
-                        inventoryPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/inventory.ini'
+                        inventoryPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/inventory.ini',
                         playbookPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/test.yml'
                     ]
                     kafka(kafkaConfig)
@@ -63,7 +64,11 @@ pipeline {
         stage('Notification') {
             steps {
                 script {
-                    slackSend channel: 'jenkinsintegration', message: Success
+                    slackSend channel: 'jenkinsintegration', 
+                              color: 'Green', 
+                              message: 'Build Success', 
+                              teamDomain: 'bhavneshpvt', 
+                              tokenCredentialId: 'Slack'
                 }
             }
         }
