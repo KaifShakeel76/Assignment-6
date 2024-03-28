@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Load Configuration') {
             steps {
-                node {
+                Ubuntu {
                     // Load the config file
-                    def config = load 'vars/config.groovy'
+                    config = load 'vars/config.groovy'
                     
-                    // Define your kafka configuration
-                    def kafkaConfig = [
+                    // ine your kafka configuration
+                    kafkaConfig = [
                         repositoryURL: 'https://github.com/KaifShakeel76/Assignment-6.git',
                         inventoryPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/inventory',
                         playbookPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/test.yml',
