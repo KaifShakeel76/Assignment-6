@@ -17,7 +17,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                sh 'git clonehttps://github.com/KaifShakeel76/Assignment-6.git'
+                sh 'git clone https://github.com/KaifShakeel76/Assignment-6.git'
             }
         }
 
