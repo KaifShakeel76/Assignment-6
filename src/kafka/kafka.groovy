@@ -9,5 +9,5 @@ def call(config) {
     sh "ansiblePlaybook become: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: '${config.inventoryPath}', playbook: '${config.playbookPath}', vaultTmpPath: ''"
     
     // Slack Notification
-    slackSend channel: config.slackChannel, color: 'Green', message: 'Build Success', teamDomain: config.slackTeamDomain, tokenCredentialId: config.slackTokenCredentialId
+    slackSend channel: 'jenkinsintegration', color: 'Green', message: 'Build Success', teamDomain: 'bhavneshpvt', tokenCredentialId: 'Slack'
 }
