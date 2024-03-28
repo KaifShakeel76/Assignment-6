@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     def ansibleConfig = [
-                        playbook: 'path/to/playbook.yml/home/kaif/Desktop/vidhyarthi/Assignments-Copy/Ansible/Assignment-5/Tool_Manager/test.yml',
+                        playbook: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/test.yml',
                         extraVars: [
                             SLACK_CHANNEL_NAME: SLACK_CHANNEL_NAME,
                             ENVIRONMENT: ENVIRONMENT,
@@ -52,8 +52,8 @@ pipeline {
                 script {
                     def kafkaConfig = [
                         repositoryURL: 'https://github.com/KaifShakeel76/Assignment-6.git',
-                        inventoryPath: '/home/kaif/Desktop/vidhyarthi/Assignments-Copy/Ansible/Assignment-5/Tool_Manager/inventory',
-                        playbookPath: '/home/kaif/Desktop/vidhyarthi/Assignments-Copy/Ansible/Assignment-5/Tool_Manager/test.yml'
+                        inventoryPath: '/var/lib/jenkins/workspace/TestShared/Tool_Manager/inventory',
+                        playbookPath: '//var/lib/jenkins/workspace/TestShared/Tool_Manager/test.yml'
                     ]
                     kafka(kafkaConfig)
                 }
