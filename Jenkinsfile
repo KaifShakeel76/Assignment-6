@@ -51,11 +51,11 @@ pipeline {
         stage('Notification') {
             steps {
                 script {
-                    slackSend channel: 'jenkinsintegration', 
+                    slackSend channel: 'build-status', 
                               color: 'Green', 
                               message: 'Build Success', 
-                              teamDomain: 'bhavneshpvt', 
-                              tokenCredentialId: 'Slack'
+                              teamDomain: 'testenv', 
+                              tokenCredentialId: 'Slack-2'
                 }
             }
         }
